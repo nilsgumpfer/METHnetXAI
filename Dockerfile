@@ -1,31 +1,26 @@
-FROM pytorch/pytorch:latest
+FROM pytorch/pytorch:1.8.1-cuda11.2-cudnn8-runtime
+
 ENV DEBIAN_FRONTEND=noninteractive
-RUN apt-get -y update && apt-get install -y apt-utils
-RUN apt-get -y install openslide-tools
-RUN apt-get -y install python3-openslide
-RUN apt-get -y install libgl1-mesa-glx
-RUN apt-get -y install git
-RUN apt-get -y install build-essential
 
-RUN pip install --upgrade pip
-RUN pip install numpy
-RUN pip install seaborn
-RUN pip install openslide-python
-RUN pip install opencv-python
-RUN pip install aicspylibczi
-RUN pip install albumentations
-RUN pip install sklearn
-RUN pip install notebook
-RUN pip install torchviz
-
-RUN pip install progress
-RUN pip install tensorflow
-RUN pip install ptitprince
-
-#TODO
-RUN pip install pickle5
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    tzdata \
+    openslide-tools \
+    python3-openslide \
+    libgl1-mesa-glx \
+    git \
+    build-essential \
+    && ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime && \
+    dpkg-reconfigure -f noninteractive tzdata && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 WORKDIR /code_rev
 
-
+# Copy repo contents
 COPY . .
+
+# Install pip packages using requirements.txt
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+CMD ["/bin/bash"]

@@ -1,0 +1,26 @@
+# Core ML stack
+torch~=1.8.1
+torchvision~=0.9.1
+torchaudio~=0.8.1
+
+# Image processing and ML utilities
+numpy~=1.19.2
+pandas~=1.2.4
+pillow~=8.1.2
+opencv-python~=4.5.2
+albumentations~=1.0.0
+scikit-learn~=0.24.2
+matplotlib~=3.4.2
+seaborn~=0.11.1
+
+# Domain-specific
+openslide-python~=1.1.2
+aicspylibczi
+ptitprince~=0.2.5
+
+# Utilities
+progress~=1.5
+notebook~=6.3.0
+torchviz~=0.0.1
+pickle5~=0.0.11
+jsonschema~=2.0.9
