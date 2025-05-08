@@ -1,4 +1,4 @@
-# Histological methylation subtype classification
+# Histological methylation subtype classification with XAI
 
 ## System requirements
 ### Software dependencies
