@@ -2,11 +2,9 @@
 
 ## System requirements
 ### Software dependencies
-Most sofware dependencies are specified in the Docker File. Additionally a installed version of [CUDA](https://developer.nvidia.com/cuda-toolkit) is needed to enable GPU Support. If you want to use [Docker](https://www.docker.com/) please make sure Docker is properly installed and additionally [nvidia-docker](https://github.com/NVIDIA/nvidia-docker).
+Most sofware dependencies are specified in the Docker File and requirements.txt. Additionally a installed version of [CUDA](https://developer.nvidia.com/cuda-toolkit) is needed to enable GPU Support. If you want to use [Docker](https://www.docker.com/) please make sure Docker is properly installed and additionally [nvidia-docker](https://github.com/NVIDIA/nvidia-docker).
 The software was tested on a Linux Ubuntu Client. For visualization of Attention Maps [QuPath](https://qupath.github.io) is used. 
 Additional package dependencies as defined in the Docker File are : [OpenSlide](https://openslide.org), [json](https://docs.python.org/3/library/json.html), [NumPy](https://numpy.org), [pandas](https://pandas.pydata.org), [pillow](https://python-pillow.org), [albumentations](https://albumentations.ai), [OpenCV](opencv.org/), [PyTorch](pytorch.org), [progress](https://pypi.org/project/progress/), [matplotlib](matplotlib.org), [scikit-learn](scikit-learn.org), [ptitprince](https://github.com/pog87/PtitPrince) and [seaborn](https://seaborn.pydata.org).
-### Software versions
-The used software versions are:  Linux Ubuntu /version 20.04.3 LTS), CUDA 11.2, Docker 20.10.12, Python 3.8, OpenSlide 1.12, json 2.0.9, NumPy 1.19.2, pandas 1.2.4, pillow 8.1.2, albumentations 1.0.0, OpenCV 4.5.2, PyTorch 1.8.1, progress 1.5, matplotlib 3.4.2, scikit-learn 0.24.2, seaborn 0.11.1, QuPath 0.2.3
 ### Required hardware
 The software was tested on a machine with 128 GB RAM and an Intel Core i9-10900K CPU @ 3.70GHz x 20 and Ubuntu 20.04.3 LTS 64bit installed.
 For speeding up network training a GPU with CUDA support is needed. We tested this project on a Nvidia GeForce RTX 3090 graphics card with 24 GB. 
@@ -14,49 +12,32 @@ For speeding up network training a GPU with CUDA support is needed. We tested th
 ## Installation guide
 We provide a guide on how to set up the project using Docker.
 ### Instructions
-Build a docker image you need to be in the folder with the Dockerfile.
+Inside the cloned repository, build the docker image, a container and connect to it by running:
 ```
-docker build -t methnet:latest .
-```
-Alternatively you can pull the already build image from dockerhub using the following command.
-```
-docker pull kaischmid/methnet
+bash create_container.sh
 ```
 
-Run the docker container.
+This builds the image and creates a container. A directory ```../METHnetDataset``` is created that will serve as a mapping to the working directory inside the container. 
+
+### Demo
+This is how to run an classification of Meningioma benign-1 vs. Meningioma intermediate-A based on the provided dataset from [zenodo](https://zenodo.org/record/6924901).
+
+In the cloned METHnetXAI directory, run:
 ```
-docker run -it --rm methnet:latest
-```
-
-
-## Demo
-### Instructions
-This is how to run an classification of Meningioma benign-1 vs. Meningioma intermediate-A.
-You need WSIs and a .csv holding patient information as specified in Data.
-  data_directories is a list of folders holding WSIs
-  csv_file is the csv holding patient information
-  working_directory is the folder where information like tiling, features and results will be stored.
-
-```
-python3 main.py -d <data_directories> -c <csv_file> -w <working_directory>
-
-python3 main.py --data_directories=<data_directories> --csv_file=<csv_file> --working_directory=<working_directory> 
+bash download_dataset.sh
 ```
 
-Example call
-```
-python3 main.py -d ["./data/wsis/"] -c "./patients.csv" -w "./data/"
+This downloads the dataset from zenodo to the ```../METHnetDataset``` directory that has been mapped to the container. To connect to the container, run:
 
-python3 main.py --data_directories=["./data/wsis/"] --csv_file="./patients.csv" --working_directory="./data/" 
 ```
-### Data
-#### Test data
-An exemplary small data set is available on [zenodo](https://zenodo.org/record/6924901). Please place all WSIs in one folder.
-#### Whole Slide images
-Currently .ndpi and .svs files are supported. We expect the files to follow a specific naming convention in order to extract information about the slide.
-The following naming convention is used: `ID_Staining_Scanner_Magnificationx.file`. 
-E.g.: `B19-21_HE_Hamamatsu_40x.ndpi` or `1-2019_PHH3_Leica_20x.svs`
-It is important that the ID is the same as in patient information.
+bash connect_to_container.sh
+```
+
+To start the demo, run this indide the container:
+
+```
+bash run_main.sh 
+```
 
 #### Patient information
 |ID|Histological ID|WHO Grade|Methylation Classes Meningioma-Classifier|Methylation class family member (EPIC) Meningioma-Classifier|probability class| probability subclass|Age|Sex|
@@ -64,7 +45,7 @@ It is important that the ID is the same as in patient information.
 |B1-21|B1-21|Atypical Meningiom (WHO Grade 2)|Meningioma intermediate|Meningioma intermediate-A|0.85|0.84|80|Female|
 |B2-21|B2-21|Meningiom (WHO Grade 1)|Meningioma benign|Meningioma benign-1|0.9|0.74|60|Male|
 ### Expected output
-The demo will generate multiple files in the working directory.
+The demo will generate multiple files in the working directory (METHnetDataset).
 #### Tiling
 A JSON per Tiling performed. The naming scheme is the following
 ```
