@@ -83,3 +83,19 @@ This code is made available under the GPLv3 License and is available for non-com
 This work was funded by the German Federal Ministry of Education and Research: MIRACUM (BMBF FKZ 01ZZ1801) and AI-RON (BMBF FKZ 01ZZ2017).
 
 ## Reference
+
+```bibtex
+@Article{Sehring2023,
+    AUTHOR = {Sehring, Jannik and Dohmen, Hildegard and Selignow, Carmen and Schmid, Kai and Grau, Stefan and Stein, Marco and Uhl, Eberhard and Mukhopadhyay, Anirban and Németh, Attila and Amsel, Daniel and Acker, Till},
+    TITLE = {Leveraging Attention-Based Convolutional Neural Networks for Meningioma Classification in Computational Histopathology},
+    JOURNAL = {Cancers},
+    VOLUME = {15},
+    YEAR = {2023},
+    NUMBER = {21},
+    ARTICLE-NUMBER = {5190},
+    PubMedID = {37958364},
+    ISSN = {2072-6694},
+    DOI = {10.3390/cancers15215190}
+}
+```
+https://doi.org/10.3390/cancers15215190
