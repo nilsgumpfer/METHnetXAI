@@ -15,7 +15,6 @@ seaborn~=0.11.1
 
 # Domain-specific
 openslide-python~=1.1.2
-aicspylibczi
 ptitprince~=0.2.5
 
 # Utilities
