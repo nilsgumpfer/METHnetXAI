@@ -1,1 +1,0 @@
-import openslide as slide
