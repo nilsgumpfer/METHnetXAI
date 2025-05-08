@@ -139,8 +139,8 @@ def train(train_patients, validation_patients, fold, setting):
     model_folder = setting.get_network_setting().get_model_folder()
     # File to save model parameters to
     model_file = 's_{}_checkpoint.pt'.format(fold)
-    if os.path.exists(model_folder + model_file):
-        return
+    checkpoint_path = model_folder+model_file
+
     # Iterate epochs
     for epoch in range(setting.get_network_setting().get_epochs()):
         # Get minimum number of patients for one class in train set
@@ -177,11 +177,16 @@ def train(train_patients, validation_patients, fold, setting):
         # Train one epoch
         train_epoch(epoch, model, n_classes, train_loader, loss_fn, optimizer)
         # Validate the model
-        stop = validate_epoch(epoch, model, n_classes, validation_loader, loss_fn, early_stopping, ckpt_name=model_folder+model_file)
+        stop = validate_epoch(epoch, model, n_classes, validation_loader, loss_fn, early_stopping, ckpt_name=checkpoint_path)
+
         # Apply Early stopping
         if stop and setting.get_network_setting().get_early_stopping():
             break
 
+    # Save last model if early stopping never triggered and no checkpoint was saved
+    if not os.path.exists(checkpoint_path):
+        print("Early stopping did not save a model. Saving last model manually.")
+        torch.save(model.state_dict(), checkpoint_path)
 
 
 def train_epoch(epoch, model, n_classes, loader, loss_fn, optimizer):

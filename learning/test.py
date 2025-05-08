@@ -59,7 +59,7 @@ def test(test_patients, fold, setting, draw_map=True):
     # Load model
     model.load_state_dict(torch.load(model_folder+model_file))
     # Predict patients and compute balanced accuracy
-    balanced_accuracy, sensitivity, specificity = test_model(model, n_classes, test_loader, patients_test, draw_map)
+    balanced_accuracy, sensitivity, specificity = test_model(model, n_classes, test_loader, patients_test, draw_map) # TODO: relevance computation is only relevant for test dataset / model application, not training
 
     return balanced_accuracy, sensitivity, specificity
 
@@ -99,7 +99,7 @@ def test_model(model, n_classes, loader, patients, draw_map):
         for batch_idx, (data, label, keys, identifier) in enumerate(loader):
             data, label = data.to(device), label.to(device)
             # predict patient
-            logits, Y_prob, Y_hat, A = model(data, label=label)
+            logits, Y_prob, Y_hat, A = model(data, label=label)  # TODO: here, model is applied to data
             # Calculate error between predicted class and label
             error = calculate_error(Y_hat, label)
             # Update values for sensitivity and specificity
@@ -110,6 +110,7 @@ def test_model(model, n_classes, loader, patients, draw_map):
             # Append score to diagnosis
             patient.get_diagnosis().add_predicted_score(Y_prob.cpu()[0][label.cpu()].numpy()[0])
             # Get attention map for predicted class
+            # TODO: here, attention is derived for current prediction
             A = A[Y_hat]
             A = A.view(-1, 1).cpu().numpy()
             # Get tile keys in attention map

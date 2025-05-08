@@ -147,7 +147,7 @@ def construct_features(patients, setting):
                                     batch = batch.to(device, non_blocking=True)
                                     # Compute features
                                     features = model(batch)
-                                    features = features.cpu().numpy()
+                                    features = features.cpu().numpy()   # TODO: to compute the gradient from the softmax to the input, the computational graph has to stick to tensor objects
                                     # Concatenate features
                                     patient_features = np.concatenate((patient_features, features), axis=0)
 
@@ -155,13 +155,13 @@ def construct_features(patients, setting):
                             wsi.close_wsi()
                         
 
-                        # Create directory to save features and keys
-                        feature_directory = {}
+                        # Create dictionary to save features and keys
+                        feature_dictionary = {}
                         # Fill directory
                         for j, tile in enumerate(wsi.get_tiles_list()[i]):
                             # Key Tile position, value feature of Tile
-                            feature_directory[tile.get_position()] = patient_features[j]
+                            feature_dictionary[tile.get_position()] = patient_features[j]
                         # Save features
-                        wsi.set_features(feature_directory, i)
+                        wsi.set_features(feature_dictionary, i)
             bar.next()
     bar.finish()
