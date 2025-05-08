@@ -1,0 +1,9 @@
+mkdir ../METHNetDataset
+cd ../METHNetDataset
+wget https://zenodo.org/records/6924901/files/Testset.csv
+wget https://zenodo.org/records/6924901/files/1-21_HE_Hamamatsu_40x.ndpi
+wget https://zenodo.org/records/6924901/files/2-20_HE_Hamamatsu_40x.ndpi
+wget https://zenodo.org/records/6924901/files/3-19_HE_Hamamatsu_40x.ndpi
+wget https://zenodo.org/records/6924901/files/4-21_HE_Hamamatsu_40x.ndpi
+wget https://zenodo.org/records/6924901/files/5-21_HE_Hamamatsu_40x.ndpi
+wget https://zenodo.org/records/6924901/files/6-21_HE_Hamamatsu_40x.ndpi
