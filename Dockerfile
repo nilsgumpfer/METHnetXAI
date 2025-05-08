@@ -4,13 +4,15 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+    cmake \
+    python3-dev \
     tzdata \
     openslide-tools \
     python3-openslide \
     libgl1-mesa-glx \
     git \
-    build-essential \
-    && ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime && \
+    build-essential && \
+    ln -fs /usr/share/zoneinfo/Europe/Berlin /etc/localtime && \
     dpkg-reconfigure -f noninteractive tzdata && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
