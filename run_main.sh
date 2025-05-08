@@ -1,0 +1,1 @@
+python3 main.py -d ["/data/WSIs/"] -c "/data/Testset.csv" -w "/data/"
