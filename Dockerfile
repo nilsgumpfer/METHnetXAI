@@ -25,4 +25,8 @@ COPY . .
 # Install pip packages using requirements.txt
 RUN pip install --upgrade pip && pip install -r requirements.txt
 
+# Fix open-cv installation
+RUN pip uninstall -y opencv-python opencv-python-headless opencv-contrib-python && \
+    pip install opencv-contrib-python~=4.5.5
+
 CMD ["/bin/bash"]
