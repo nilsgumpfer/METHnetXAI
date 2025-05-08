@@ -142,23 +142,24 @@ class Patient(object):
         list
             List of matching WSI identifiers as strings
         """
-        # Get correct file ending
-        file_ending = image_property.get_file_ending()
+        # # Get correct file ending
+        # file_ending = image_property.get_file_ending()
+
         # All WSIs in folder with correct ID
-        histological_identifier = 'B' + str(int(self.identifier.split('-')[0].split("B")[1])) + '-' + self.identifier.split("-")[1]
-        possible_wsis = [f for f in os.listdir(data_folder) if f.startswith(str(histological_identifier))]
-        # Filter for those with correct file format 
-        possible_wsis = [f for f in possible_wsis if f.endswith(file_ending)]
-        # Check if additional information is in file name
- 
-        # Filter for those with correct staining
-        possible_wsis = [f for f in possible_wsis if f.split('_')[1] == image_property.get_staining()]
-        # Filter for those with correct scanner
-        possible_wsis = [f for f in possible_wsis if f.split('_')[2] == image_property.get_scanner()]
-        # Filter for those with correct magnification
-        possible_wsis = [f for f in possible_wsis if f.split('_')[3] == str(image_property.get_magnification())+'x'+file_ending]
-        # Get WSI identifiers
-        possible_wsis = [f.split('_')[0] for f in possible_wsis]
+        possible_wsis = [self.identifier]   # TODO: tmp
+
+        # # Filter for those with correct file format
+        # possible_wsis = [f for f in possible_wsis if f.endswith(file_ending)]
+        # # Check if additional information is in file name
+        #
+        # # Filter for those with correct staining
+        # possible_wsis = [f for f in possible_wsis if f.split('_')[1] == image_property.get_staining()]
+        # # Filter for those with correct scanner
+        # possible_wsis = [f for f in possible_wsis if f.split('_')[2] == image_property.get_scanner()]
+        # # Filter for those with correct magnification
+        # possible_wsis = [f for f in possible_wsis if f.split('_')[3] == str(image_property.get_magnification())+'x'+file_ending]
+        # # Get WSI identifiers
+        # possible_wsis = [f.split('_')[0] for f in possible_wsis]
 
         return possible_wsis
 
