@@ -1,7 +1,6 @@
 FROM pytorch/pytorch:latest
-
-RUN apt-get -y update
-RUN apt-get install -y apt-utils
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get -y update && apt-get install -y apt-utils
 RUN apt-get -y install openslide-tools
 RUN apt-get -y install python3-openslide
 RUN apt-get -y install libgl1-mesa-glx

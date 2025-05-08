@@ -7,3 +7,5 @@
 *.pt
 *.csv
 *.pyc
+*.idea
+.idea/
